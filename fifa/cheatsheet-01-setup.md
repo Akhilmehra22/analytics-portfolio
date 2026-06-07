@@ -1,31 +1,81 @@
-Commands I will use every session 
+# Cheat Sheet 01 -- Setup, Git, pandas Basics
+
+---
+
+## Daily Session Commands
 cd "C:\Users\admin\Documents\Projects\analytics-portfolio\fifa"
 .venv\Scripts\activate
 jupyter lab
 
-what each line does 
-- uv:installs python and manages packages
-- venv: isolated box per project
-- pip install via uv: puts packages in the active box/enviorment
-- import pandas as pd: load pandas, nicknames it pd
-- import matplotlib.pyplot as plt: laods the charting interface of pandas
-why (fifa) in the prompt matters:
-it basically tewll you that this venv is for which project If (fifa) is NOT showing, any package I install goes to the wrong place and my imports will fail.
+Shortcut: goto-fifa (activates environment and navigates in one command)
 
-Git -- git add, git commit, git push
-git add stages all the changes we have made
-gitcommit those changes that measns saves the changes 
-git push pushes these changes to the remote version of the same folder in git hub
-we need to type u- if something doesn't exists in the remote folder so you have to tell using u that craeate this branch and link it to same branch in the local 
+---
 
-Data frame V/s Series
-Data frame is a data stored in the table form like in sql tables but this called in memory of the session and is in a form of coulms and rowns
+## Tools
+- uv: installs Python and manages packages
+- venv: isolated box per project -- each project has its own packages
+- (fifa) in prompt: environment is active. If missing, imports will fail.
 
-data series it's just one column pulled out of a DataFrame, has the same row index as the original table.
+---
 
-Boolean filtering : is basiaclly inititally taking the brackets and creating a yes or no in the internal series for a columne then using those positions of those places outer bracket gives the entire dataframe where that series is yes 
+## Git -- Daily Workflow
+git add .                          # stage all changes
+git commit -m "message"            # save snapshot with description
+git push                           # send to GitHub
 
-can select specific columns by passing a list of column names inside double brackets on a DataFrame
-can filter rows using a boolean mask -- pandas evaluates a condition on a column and returns True/False for each row, then the outer brackets return only the rows where the condition is True. I can chain column selection after filtering using double brackets at the end
-can add a new column to a DataFrame by assigning a calculation to a new column name -- e.g. df['new_col'] = df['col1'] - df['col2']
-can group by any column and perform aggregations -- single aggregation returns a Series, multiple aggregations using .agg() returns a DataFrame with named columns. Chain .sort_values() at the end to order the result
+First time pushing a new branch only:
+git push --set-upstream origin main
+
+---
+
+## DataFrame vs Series
+- DataFrame: a full table with rows and columns -- like a SQL table in memory
+- Series: a single column pulled from a DataFrame, keeps the same row index
+
+---
+
+## Key pandas Patterns
+
+# Select specific columns
+df[['col1', 'col2']]
+
+# Filter rows (boolean mask)
+df[df['col'] > value]
+
+# Filter rows AND select columns
+df[df['col'] > value][['col1', 'col2']]
+
+# Add new column
+df['new_col'] = df['col1'] + df['col2']
+
+# Single aggregation
+df.groupby('col')['value'].sum()
+
+# Multiple aggregations
+df.groupby('col').agg(
+    name1=('col1', 'sum'),
+    name2=('col2', 'count')
+).sort_values('name1', ascending=False)
+
+# iloc vs loc
+df.iloc[0]           # row at position 0 -- changes after sort
+df.loc[0]            # row with label 0 -- never changes after sort
+df.iloc[0:5, 0:6]    # rows 0-4, columns 0-5 by position
+
+# Missing data
+df.isnull().sum()    # check how many NaN per column
+df.fillna(0)         # replace NaN with 0
+df.dropna()          # remove rows with any NaN
+
+---
+
+## Chart Template
+plt.figure(figsize=(10, 6))
+plt.bar(x, y, color='steelblue')       # bar chart
+plt.scatter(x, y, alpha=0.6, s=100)   # scatter plot
+plt.plot(x, y, color='orange')        # line chart
+plt.title('Title')
+plt.xlabel('X Label')
+plt.ylabel('Y Label')
+plt.tight_layout()
+plt.show()
