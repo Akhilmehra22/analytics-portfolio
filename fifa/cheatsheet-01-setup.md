@@ -79,3 +79,8 @@ plt.xlabel('X Label')
 plt.ylabel('Y Label')
 plt.tight_layout()
 plt.show()
+
+
+all_events = [] then append inside loop
+pd.concat(list, ignore_index=True)
+df.reset_index()
