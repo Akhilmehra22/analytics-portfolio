@@ -84,3 +84,13 @@ plt.show()
 all_events = [] then append inside loop
 pd.concat(list, ignore_index=True)
 df.reset_index()
+
+
+# Skills Debt — carried forward, exercised in later weeks
+- merge / join operations → Project 2, Weeks 7-8
+- apply / map / lambda → Project 2 feature engineering
+- pivot / melt → Week 3 stats viz + Project 2
+- datetime operations → FIFA tracking + Project 2 orders
+- numpy arrays / vectorization / broadcasting → Weeks 4-5 A/B math
+- seaborn → Week 3 (this week)
+- Tableau fundamentals (beyond load + basic charts) → Week 10
